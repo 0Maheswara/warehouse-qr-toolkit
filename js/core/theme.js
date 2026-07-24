@@ -2,7 +2,7 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: theme.js
-Version: 2.1.0
+Version: 2.2.0
 
 Purpose:
 Manages application theme (Light / Dark).
@@ -37,10 +37,9 @@ const Theme = {
     init() {
 
         // Cache DOM elements
-        this.cache.toggleButton =
-    document.querySelector(
-        CONFIG.SELECTORS.themeToggle
-    );
+        this.cache.toggleButton = Utils.query(
+            CONFIG.SELECTORS.themeToggle
+        );
 
         // Load saved theme
         this.current = Storage.load(
@@ -49,14 +48,11 @@ const Theme = {
         );
 
         // Attach event listeners
-        if (this.cache.toggleButton) {
-
-            this.cache.toggleButton.addEventListener(
-                "click",
-                () => this.toggle()
-            );
-
-        }
+        Utils.on(
+            this.cache.toggleButton,
+            "click",
+            () => this.toggle()
+        );
 
         // Apply current theme
         this.apply();
@@ -72,10 +68,19 @@ const Theme = {
      */
     apply() {
 
-        document.body.classList.toggle(
-            "dark",
-            this.current === "dark"
+        Utils.toggleClass(
+            document.body,
+            "dark"
         );
+
+        if (this.current !== "dark") {
+
+            Utils.removeClass(
+                document.body,
+                "dark"
+            );
+
+        }
 
         this.updateIcon();
 
