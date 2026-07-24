@@ -2,21 +2,27 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: router.js
-Version: 2.0.0
+Version: 2.1.0
 
 Purpose:
-Single Page Application (SPA) router.
+Single Page Application (SPA) Router.
 
 Responsibilities:
-- Cache page elements
-- Cache navigation buttons
-- Initialize router
-- Handle navigation clicks
-- Listen for browser hash changes
+- Cache DOM elements
+- Bind navigation events
+- Navigate between pages
+- Restore previous page
+- Synchronize browser hash
 ------------------------------------------------------------
 */
 
 const Router = {
+
+    /* ======================================================
+       Constants
+    ====================================================== */
+
+    DEFAULT_PAGE: CONFIG.DEFAULT_PAGE,
 
     /* ======================================================
        Cached Elements
@@ -31,67 +37,98 @@ const Router = {
     },
 
     /* ======================================================
-       Router Initialization
+       State
     ====================================================== */
 
-    init() {
+    state: {
 
-        console.log("Router Init");
-        console.log(document.querySelectorAll(".page"));
-
-        // Cache page containers
-        this.cache.pages = [
-    ...document.querySelectorAll(
-        CONFIG.SELECTORS.pages
-    )
-];
-
-        // Cache navigation buttons
-       this.cache.navButtons = [
-    ...document.querySelectorAll(
-        CONFIG.SELECTORS.navButtons
-    )
-];
-        // Navigation button clicks
-        this.cache.navButtons.forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const page = button.dataset.page;
-
-                this.go(page);
-
-            });
-
-        });
-
-        // Browser Back / Forward
-        window.addEventListener(
-            "hashchange",
-            () => {
-
-                this.restoreFromHash();
-
-            }
-        );
+        currentPage: CONFIG.DEFAULT_PAGE
 
     },
 
     /* ======================================================
-       Public API
+       Initialization
     ====================================================== */
 
-        go(page) {
+    /**
+     * Initialize Router.
+     */
+    init() {
 
-        /*
-        ======================================================
-        Validate Requested Page
-        ======================================================
-        */
+        this.cacheElements();
 
-        const validPage = Object.keys(CONFIG.PAGES).includes(page);
+        this.bindEvents();
 
-        if (!validPage) {
+        this.restoreState();
+
+    },
+
+    /* ======================================================
+       Private Methods
+    ====================================================== */
+
+    /**
+     * Cache frequently used DOM elements.
+     */
+    cacheElements() {
+
+        this.cache.pages = Utils.queryAll(
+            CONFIG.SELECTORS.pages
+        );
+
+        this.cache.navButtons = Utils.queryAll(
+            CONFIG.SELECTORS.navButtons
+        );
+
+    },
+
+    /**
+     * Register all router event listeners.
+     */
+    bindEvents() {
+
+        this.cache.navButtons.forEach(button => {
+
+            Utils.on(
+                button,
+                "click",
+                () => {
+
+                    this.onNavigationClick(button);
+
+                }
+            );
+
+        });
+
+        Utils.on(
+
+            window,
+
+            "hashchange",
+
+            () => {
+
+                this.onHashChange();
+
+            }
+
+        );
+
+    },
+    /* ======================================================
+       Public Methods
+    ====================================================== */
+
+    /**
+     * Navigate to a page.
+     *
+     * @param {string} page
+     */
+    go(page) {
+
+        // Validate page
+        if (!CONFIG.PAGES[page]) {
 
             console.warn(
                 `Router: Invalid page "${page}"`
@@ -101,59 +138,130 @@ const Router = {
 
         }
 
+        // Update state
+        this.state.currentPage = page;
 
-        /*
-        ======================================================
-        Hide All Pages
-        ======================================================
-        */
+        // Update UI
+        this.hidePages();
 
-        this.cache.pages.forEach(section => {
+        this.showPage(page);
 
-            section.classList.remove(
+        this.updateNavigation(page);
+
+        // Save page
+        Storage.save(
+            CONFIG.STORAGE_KEYS.lastPage,
+            page
+        );
+
+        // Update browser hash
+        this.updateHash(page);
+
+    },
+
+    /**
+     * Get current page.
+     *
+     * @returns {string}
+     */
+    current() {
+
+        return this.state.currentPage;
+
+    },
+
+    /**
+     * Reload current page.
+     */
+    reload() {
+
+        this.go(
+            this.state.currentPage
+        );
+
+    },
+
+    /* ======================================================
+       Private Methods
+    ====================================================== */
+
+    /**
+     * Restore previous page.
+     */
+    restoreState() {
+
+        const page =
+
+            window.location.hash.substring(1)
+
+            ||
+
+            Storage.load(
+                CONFIG.STORAGE_KEYS.lastPage,
+                this.DEFAULT_PAGE
+            );
+
+        this.go(page);
+
+    },
+    /**
+     * Hide all pages.
+     */
+    hidePages() {
+
+        this.cache.pages.forEach(page => {
+
+            Utils.removeClass(
+                page,
                 "active-page"
             );
 
         });
 
+    },
 
-        /*
-        ======================================================
-        Show Requested Page
-        ======================================================
-        */
+    /**
+     * Show a page.
+     *
+     * @param {string} page
+     */
+    showPage(page) {
 
-        const targetPage =
-            document.getElementById(
-                `page-${page}`
-            );
+        const element = Utils.byId(
+            CONFIG.PAGES[page].id
+        );
 
+        if (!element) {
 
-        if (targetPage) {
-
-            targetPage.classList.add(
-                "active-page"
-            );
+            return;
 
         }
 
+        Utils.addClass(
+            element,
+            "active-page"
+        );
 
-        /*
-        ======================================================
-        Update Navigation Highlight
-        ======================================================
-        */
+    },
+
+    /**
+     * Update navigation button highlight.
+     *
+     * @param {string} page
+     */
+    updateNavigation(page) {
 
         this.cache.navButtons.forEach(button => {
 
-            button.classList.remove(
+            Utils.removeClass(
+                button,
                 "active"
             );
 
-
             if (button.dataset.page === page) {
 
-                button.classList.add(
+                Utils.addClass(
+                    button,
                     "active"
                 );
 
@@ -161,100 +269,67 @@ const Router = {
 
         });
 
+    },
 
-        /*
-        ======================================================
-        Update Application State
-        ======================================================
-        */
-
-        if (typeof App !== "undefined") {
-
-            App.state.page = page;
-
-        }
-
-
-        /*
-        ======================================================
-        Update Browser Hash
-        ======================================================
-        */
+    /**
+     * Update browser URL hash.
+     *
+     * @param {string} page
+     */
+    updateHash(page) {
 
         if (
+
             window.location.hash.substring(1)
-            !== page
+
+            === page
+
         ) {
 
-            window.location.hash = page;
+            return;
 
         }
 
-    },
-                showPage(page) {
-
-        const element =
-            document.getElementById(
-                `page-${page}`
-            );
-
-        if (element) {
-
-            element.classList.add(
-                "active-page"
-            );
-
-        }
+        window.location.hash = page;
 
     },
 
+    /* ======================================================
+       Event Handlers
+    ====================================================== */
 
-    hidePages() {
+    /**
+     * Navigation button click.
+     *
+     * @param {HTMLElement} button
+     */
+    onNavigationClick(button) {
 
-        this.cache.pages.forEach(section => {
-
-            section.classList.remove(
-                "active-page"
-            );
-
-        });
+        this.go(
+            button.dataset.page
+        );
 
     },
 
-
-    restoreFromHash() {
+    /**
+     * Browser hash changed.
+     */
+    onHashChange() {
 
         const page =
+
             window.location.hash.substring(1);
 
+        if (!page) {
 
-        if (page) {
-
-            this.go(page);
-
-        }
-        else {
-
-            this.go(
-                CONFIG.DEFAULT_PAGE
-            );
+            return;
 
         }
 
-    },
-
-
-    current() {
-
-        return App.state.page;
-
-    },
-
-
-    reload() {
-
-        this.go(App.state.page);
+        this.go(page);
 
     }
 
 };
+
+Object.freeze(Router);
