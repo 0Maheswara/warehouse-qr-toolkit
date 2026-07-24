@@ -93,17 +93,35 @@ const Utils = {
     /**
      * Toggle a CSS class.
      */
-    toggleClass(element, className) {
+    /**
+ * Toggle a CSS class.
+ *
+ * @param {HTMLElement} element
+ * @param {string} className
+ * @param {boolean} [force]
+ */
+toggleClass(element, className, force) {
 
-        if (!element) {
+    if (!element) {
 
-            return;
+        return;
 
-        }
+    }
+
+    if (force === undefined) {
 
         element.classList.toggle(className);
 
-    },
+    } else {
+
+        element.classList.toggle(
+            className,
+            force
+        );
+
+    }
+
+},
 
     /**
      * Show an element.
