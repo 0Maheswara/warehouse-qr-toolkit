@@ -41,14 +41,17 @@ const Router = {
 
         // Cache page containers
         this.cache.pages = [
-            ...document.querySelectorAll(".page")
-        ];
+    ...document.querySelectorAll(
+        CONFIG.SELECTORS.pages
+    )
+];
 
         // Cache navigation buttons
-        this.cache.navButtons = [
-            ...document.querySelectorAll("[data-page]")
-        ];
-
+       this.cache.navButtons = [
+    ...document.querySelectorAll(
+        CONFIG.SELECTORS.navButtons
+    )
+];
         // Navigation button clicks
         this.cache.navButtons.forEach(button => {
 
