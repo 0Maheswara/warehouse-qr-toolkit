@@ -50,6 +50,21 @@ const CONFIG = {
         settings: "settings"
 
     },
+    /* ======================================================
+   Module States
+====================================================== */
+
+MODULE_STATUS: {
+
+    IDLE: "idle",
+
+    INITIALIZING: "initializing",
+
+    READY: "ready",
+
+    ERROR: "error"
+
+},
 
     /* ======================================================
    DOM Selectors
@@ -158,3 +173,5 @@ Object.freeze(CONFIG.BAG_TYPES);
 Object.freeze(CONFIG.PAGES);
 
 Object.freeze(CONFIG);
+
+Object.freeze(CONFIG.MODULE_STATUS);
