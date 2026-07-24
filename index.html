@@ -3,916 +3,275 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Warehouse QR Toolkit</title>
+    <title>Warehouse Operations Toolkit</title>
 
+    <meta name="description" content="Warehouse QR and Label Management Toolkit">
 
-<style>
-
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-
-body {
-
-    margin:0;
-    background:#f4f6f8;
-    color:#222;
-
-}
-
-
-/* Header */
-
-header {
-
-    background:#1f2937;
-    color:white;
-    padding:15px;
-    text-align:center;
-    position:relative;
-
-}
-
-
-header h1 {
-
-    margin:0;
-    font-size:22px;
-
-}
-
-
-.dark-mode {
-
-    position:absolute;
-    right:15px;
-    top:15px;
-    cursor:pointer;
-    border:none;
-    background:none;
-    font-size:20px;
-
-}
-
-
-
-/* Navigation */
-
-nav {
-
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    flex-wrap:wrap;
-    background:white;
-    padding:10px;
-    position:sticky;
-    top:0;
-    z-index:10;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-
-}
-
-
-nav button {
-
-    border:none;
-    padding:10px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    background:#e5e7eb;
-    font-size:14px;
-
-}
-
-
-nav button:hover {
-
-    background:#2563eb;
-    color:white;
-
-}
-
-
-/* Container */
-
-.container {
-
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-
-}
-
-
-
-/* Pages */
-
-.page {
-
-    display:none;
-
-}
-
-
-.page.active {
-
-    display:block;
-
-}
-
-
-
-/* Cards */
-
-.card {
-
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    margin-bottom:20px;
-    box-shadow:0 3px 10px rgba(0,0,0,0.08);
-
-}
-
-
-
-.tool-grid {
-
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-
-}
-
-
-
-.tool-card {
-
-    background:white;
-    padding:25px;
-    text-align:center;
-    border-radius:15px;
-    cursor:pointer;
-    box-shadow:0 3px 10px rgba(0,0,0,0.08);
-
-}
-
-
-.tool-card:hover {
-
-    transform:translateY(-3px);
-
-}
-
-
-
-/* Forms */
-
-
-input,
-select {
-
-    width:100%;
-    padding:10px;
-    margin-top:8px;
-    margin-bottom:15px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font-size:16px;
-
-}
-
-
-label {
-
-    font-weight:bold;
-
-}
-
-
-
-.preview {
-
-    background:#f1f5f9;
-    padding:15px;
-    border-radius:10px;
-    word-break:break-all;
-    font-family:monospace;
-
-}
-
-
-
-/* Dark Mode */
-
-.dark {
-
-    background:#111827;
-    color:white;
-
-}
-
-
-.dark .card,
-.dark .tool-card,
-.dark nav {
-
-    background:#1f2937;
-    color:white;
-
-}
-
-
-.dark nav button {
-
-    background:#374151;
-    color:white;
-
-}
-
-
-.dark input,
-.dark select {
-
-    background:#374151;
-    color:white;
-    border-color:#555;
-
-}
-
-
-.dark .preview {
-
-    background:#374151;
-
-}
-
-
-
-/* Mobile */
-
-
-@media(max-width:600px){
-
-    nav button {
-
-        width:45%;
-
-    }
-
-
-    header h1 {
-
-        font-size:18px;
-
-    }
-
-}
-
-
-
-</style>
-
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dark.css">
 
 </head>
 
-
 <body>
 
+    <!-- ======================================================
+         Application
+    ======================================================= -->
 
+    <div id="app">
 
-<header>
+        <!-- ================= HEADER ================= -->
 
+        <header class="app-header">
 
-<button class="dark-mode" onclick="toggleDark()">
-🌙
-</button>
+            <div class="header-left">
 
+                <button id="menu-toggle"
+                        class="icon-button"
+                        aria-label="Toggle Navigation">
 
-<h1>
-Warehouse QR Toolkit
-</h1>
+                    ☰
 
+                </button>
 
-</header>
+                <h1 id="app-title">
+                    Warehouse Operations Toolkit
+                </h1>
 
+            </div>
 
+            <div class="header-right">
 
+                <span id="app-version">
+                    v2.0.0
+                </span>
 
-<nav>
+                <button id="theme-toggle"
+                        class="icon-button"
+                        aria-label="Toggle Theme">
 
+                    🌙
 
-<button onclick="showPage('home')">
-🏠 Home
-</button>
+                </button>
 
+            </div>
 
-<button onclick="showPage('item')">
-📦 Item QR
-</button>
+        </header>
 
+        <!-- ================= LAYOUT ================= -->
 
-<button onclick="showPage('bag')">
-👜 Bag QR
-</button>
+        <div class="app-layout">
 
+            <!-- Sidebar -->
 
-<button onclick="showPage('bulk')">
-🗂 Bulk QR
-</button>
+            <aside id="sidebar">
 
+                <nav>
 
-<button onclick="showPage('location')">
-📍 Location QR
-</button>
+                    <ul class="nav-list">
 
+                        <li>
+                            <button class="nav-button active"
+                                    data-page="dashboard">
 
-</nav>
+                                🏠 Dashboard
 
+                            </button>
+                        </li>
 
+                        <li>
+                            <button class="nav-button"
+                                    data-page="item">
 
+                                📦 Item QR
 
-<div class="container">
+                            </button>
+                        </li>
 
+                        <li>
+                            <button class="nav-button"
+                                    data-page="bag">
 
+                                👜 Bag QR
 
-<!-- Dashboard -->
+                            </button>
+                        </li>
 
+                        <li>
+                            <button class="nav-button"
+                                    data-page="location">
 
-<section id="home" class="page active">
+                                📍 Location QR
 
+                            </button>
+                        </li>
 
-<div class="card">
+                        <li>
+                            <button class="nav-button"
+                                    data-page="bulk">
 
-<h2>
-Warehouse QR Toolkit
-</h2>
+                                🗂 Bulk QR
 
+                            </button>
+                        </li>
 
-<p>
-Select a tool to generate warehouse identifiers.
-</p>
+                    </ul>
 
+                </nav>
 
-</div>
+            </aside>
 
+            <!-- Main Content -->
 
+            <main id="content">
 
-<div class="tool-grid">
+                <!-- Dashboard -->
 
+                <section id="dashboard-page"
+                         class="page active-page">
 
+                    <div class="card">
 
-<div class="tool-card" onclick="showPage('item')">
+                        <h2>
+                            Welcome
+                        </h2>
 
-<h2>📦</h2>
-<h3>Item QR</h3>
-<p>B_1047_Date</p>
+                        <p>
 
-</div>
+                            Welcome to the Warehouse Operations Toolkit.
 
+                        </p>
 
+                        <p>
 
+                            This application is being built step by step
+                            with reusable components and a shared QR engine.
 
-<div class="tool-card" onclick="showPage('bag')">
+                        </p>
 
-<h2>👜</h2>
-<h3>Bag QR</h3>
-<p>Unique bag identification</p>
+                        <hr>
 
-</div>
+                        <h3>
+                            Current Modules
+                        </h3>
 
+                        <ul>
 
+                            <li>📦 Item QR</li>
+                            <li>👜 Bag QR</li>
+                            <li>📍 Location QR</li>
+                            <li>🗂 Bulk QR</li>
 
+                        </ul>
 
+                    </div>
 
-<div class="tool-card" onclick="showPage('bulk')">
+                </section>
 
-<h2>🗂</h2>
-<h3>Bulk QR</h3>
-<p>Multiple QR generation</p>
+                <!-- Item -->
 
-</div>
+                <section id="item-page"
+                         class="page">
 
+                    <div class="card">
 
+                        <h2>📦 Item QR</h2>
 
+                        <p>
+                            Module coming soon...
+                        </p>
 
+                    </div>
 
-<div class="tool-card" onclick="showPage('location')">
+                </section>
 
-<h2>📍</h2>
-<h3>Location QR</h3>
-<p>Aisle Rack Bin</p>
+                <!-- Bag -->
 
-</div>
+                <section id="bag-page"
+                         class="page">
 
+                    <div class="card">
 
+                        <h2>👜 Bag QR</h2>
 
-</div>
+                        <p>
+                            Module coming soon...
+                        </p>
 
+                    </div>
 
-</section>
+                </section>
 
+                <!-- Location -->
 
+                <section id="location-page"
+                         class="page">
 
+                    <div class="card">
 
-<!-- Item QR -->
+                        <h2>📍 Location QR</h2>
 
+                        <p>
+                            Module coming soon...
+                        </p>
 
-<section id="item" class="page">
+                    </div>
 
+                </section>
 
-<div class="card">
+                <!-- Bulk -->
 
+                <section id="bulk-page"
+                         class="page">
 
-<h2>
-📦 Item QR Generator
-</h2>
+                    <div class="card">
 
+                        <h2>🗂 Bulk QR</h2>
 
-<label>
-Item Number
-</label>
+                        <p>
+                            Module coming soon...
+                        </p>
 
+                    </div>
 
-<input id="itemNumber"
-type="text"
-placeholder="Example: 1047"
-oninput="updateItemPreview()">
+                </section>
 
+            </main>
 
+        </div>
 
-<label>
-Date
-</label>
+        <!-- ================= FOOTER ================= -->
 
+        <footer class="app-footer">
 
-<input id="itemDate"
-type="date"
-onchange="updateItemPreview()">
+            <span>
 
+                Warehouse Operations Toolkit
 
+            </span>
 
-<label>
-QR Text Preview
-</label>
+            <span>
 
+                Version 2.0.0
 
-<div class="preview" id="itemPreview">
+            </span>
 
-B_Item_Date
+        </footer>
 
-</div>
+    </div>
 
+    <!-- JavaScript -->
 
-
-</div>
-
-
-</section>
-
-    <!-- Bag QR -->
-
-<section id="bag" class="page">
-
-<div class="card">
-
-<h2>
-👜 Bag QR Generator
-</h2>
-
-
-<label>
-Bag Type
-</label>
-
-
-<select id="bagType" onchange="updateBagPreview()">
-
-<option value="XS6">Extra Small Bag (XS6)</option>
-<option value="S6" selected>Small Bag (S6)</option>
-<option value="M6">Medium Bag (M6)</option>
-<option value="L6">Large Bag (L6)</option>
-<option value="K11">General / Appliance (K11)</option>
-
-</select>
-
-
-
-<label>
-Extra 4 Digits (XXXX)
-</label>
-
-
-<input 
-id="bagExtra"
-maxlength="4"
-value="0001"
-oninput="updateBagPreview()"
-placeholder="Example: 0001">
-
-
-
-<label>
-Generated Bag ID
-</label>
-
-
-<div class="preview" id="bagPreview">
-
-S62026A07241230450001
-
-</div>
-
-
-
-</div>
-
-</section>
-
-
-
-
-
-<!-- Bulk QR -->
-
-
-<section id="bulk" class="page">
-
-
-<div class="card">
-
-
-<h2>
-🗂 Bulk QR Generator
-</h2>
-
-
-<p>
-Bulk QR generation will be added in Phase 2.
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- Location QR -->
-
-
-<section id="location" class="page">
-
-
-<div class="card">
-
-
-<h2>
-📍 Location QR Generator
-</h2>
-
-
-
-<label>
-Aisle
-</label>
-
-<input id="aisle"
-placeholder="Example: A12"
-oninput="updateLocationPreview()">
-
-
-
-<label>
-Rack
-</label>
-
-<input id="rack"
-placeholder="Example: B03"
-oninput="updateLocationPreview()">
-
-
-
-<label>
-Bin
-</label>
-
-<input id="bin"
-placeholder="Example: C18"
-oninput="updateLocationPreview()">
-
-
-
-<label>
-Location Text Preview
-</label>
-
-
-<div class="preview" id="locationPreview">
-
-AISLE A12
-RACK B03
-BIN C18
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-</div>
-
-
-
-
-
-<script>
-
-
-/* Navigation */
-
-
-function showPage(pageId){
-
-
-    let pages=document.querySelectorAll(".page");
-
-
-    pages.forEach(function(page){
-
-        page.classList.remove("active");
-
-    });
-
-
-    document.getElementById(pageId)
-    .classList.add("active");
-
-
-}
-
-
-
-
-
-
-
-/* Dark Mode */
-
-
-function toggleDark(){
-
-    document.body.classList.toggle("dark");
-
-}
-
-
-
-
-
-
-
-/* Item QR Preview */
-
-
-function updateItemPreview(){
-
-
-    let number=document.getElementById("itemNumber").value;
-
-
-    let date=document.getElementById("itemDate").value;
-
-
-    if(date){
-
-        let d=new Date(date);
-
-
-        let day=String(d.getDate()).padStart(2,"0");
-
-        let month=String(d.getMonth()+1).padStart(2,"0");
-
-        let year=d.getFullYear();
-
-
-        date=day+"-"+month+"-"+year;
-
-    }
-
-
-
-    if(number===""){
-
-        document.getElementById("itemPreview").innerHTML=
-        "B_Item_Date";
-
-        return;
-
-    }
-
-
-
-    document.getElementById("itemPreview").innerHTML=
-
-    "B_"+number+"_"+date;
-
-
-
-}
-
-
-
-
-
-/* Set today's date */
-
-
-window.onload=function(){
-
-
-    let today=new Date();
-
-
-    let yyyy=today.getFullYear();
-
-    let mm=String(today.getMonth()+1).padStart(2,"0");
-
-    let dd=String(today.getDate()).padStart(2,"0");
-
-
-    document.getElementById("itemDate").value=
-
-    yyyy+"-"+mm+"-"+dd;
-
-
-
-    updateItemPreview();
-
-    updateBagPreview();
-
-    updateLocationPreview();
-
-
-};
-
-
-
-
-
-
-
-/* Bag QR Generator */
-
-
-function randomCharacter(){
-
-
-    let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-
-    return chars.charAt(
-
-        Math.floor(Math.random()*chars.length)
-
-    );
-
-
-}
-
-
-
-
-
-function updateBagPreview(){
-
-
-
-    let type=document.getElementById("bagType").value;
-
-
-    let extra=document.getElementById("bagExtra").value;
-
-
-    if(extra===""){
-
-        extra="0000";
-
-    }
-
-
-
-    let now=new Date();
-
-
-
-    let year=now.getFullYear();
-
-
-
-    let month=String(now.getMonth()+1)
-    .padStart(2,"0");
-
-
-
-    let day=String(now.getDate())
-    .padStart(2,"0");
-
-
-
-    let hour=String(now.getHours())
-    .padStart(2,"0");
-
-
-
-    let minute=String(now.getMinutes())
-    .padStart(2,"0");
-
-
-
-    let second=String(now.getSeconds())
-    .padStart(2,"0");
-
-
-
-    let random=randomCharacter();
-
-
-
-    let code=
-
-    type+
-    year+
-    random+
-    month+
-    day+
-    hour+
-    minute+
-    second+
-    extra;
-
-
-
-    document.getElementById("bagPreview")
-    .innerHTML=code;
-
-
-
-}
-
-
-
-
-
-
-/* Location QR Preview */
-
-
-function updateLocationPreview(){
-
-
-    let aisle=document.getElementById("aisle").value;
-
-    let rack=document.getElementById("rack").value;
-
-    let bin=document.getElementById("bin").value;
-
-
-
-    let text=
-
-
-    "AISLE "+aisle+
-    "<br>RACK "+rack+
-    "<br>BIN "+bin;
-
-
-
-    document.getElementById("locationPreview")
-    .innerHTML=text;
-
-
-}
-
-
-
-</script>
-
-
+    <script src="js/storage.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 
