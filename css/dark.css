@@ -1,1 +1,52 @@
-#
+/*
+------------------------------------------------------------
+Warehouse Operations Toolkit
+File: dark.css
+Version: 2.0.0
+Purpose:
+Dark theme overrides
+------------------------------------------------------------
+*/
+
+/* ==========================================================
+   DARK THEME
+========================================================== */
+
+body.dark {
+
+    --background: #121212;
+    --surface: #1f1f1f;
+
+    --text: #f3f3f3;
+    --text-light: #bdbdbd;
+
+    --border: #353535;
+
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+
+}
+
+
+/* ==========================================================
+   COMPONENT OVERRIDES
+========================================================== */
+
+body.dark .icon-button:hover {
+
+    background: #2d2d2d;
+
+}
+
+body.dark .nav-button:hover {
+
+    background: #2b3445;
+
+}
+
+body.dark .status-badge {
+
+    background: #665300;
+    color: #ffe58f;
+
+}
