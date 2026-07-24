@@ -61,7 +61,7 @@ init() {
 
             CONFIG.MODULE_STATUS.READY;
 
-        Logger.log(
+        Logger.info(
 
             `${CONFIG.APP_NAME} v${CONFIG.VERSION} started`
 
