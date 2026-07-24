@@ -75,9 +75,143 @@ const Router = {
        Public API
     ====================================================== */
 
-    go(page) {
+        go(page) {
 
-        // Part 2
+        /*
+        ======================================================
+        Validate Requested Page
+        ======================================================
+        */
+
+        const validPage = CONFIG.PAGES.includes(page);
+
+        if (!validPage) {
+
+            console.warn(
+                `Router: Invalid page "${page}"`
+            );
+
+            return;
+
+        }
+
+
+        /*
+        ======================================================
+        Hide All Pages
+        ======================================================
+        */
+
+        this.cache.pages.forEach(section => {
+
+            section.classList.remove(
+                "active-page"
+            );
+
+        });
+
+
+        /*
+        ======================================================
+        Show Requested Page
+        ======================================================
+        */
+
+        const targetPage =
+            document.getElementById(
+                `page-${page}`
+            );
+
+
+        if (targetPage) {
+
+            targetPage.classList.add(
+                "active-page"
+            );
+
+        }
+
+
+        /*
+        ======================================================
+        Update Navigation Highlight
+        ======================================================
+        */
+
+        this.cache.navButtons.forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+
+            if (button.dataset.page === page) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+        });
+
+
+        /*
+        ======================================================
+        Update Application State
+        ======================================================
+        */
+
+        if (typeof App !== "undefined") {
+
+            App.state.page = page;
+
+        }
+
+
+        /*
+        ======================================================
+        Update Browser Hash
+        ======================================================
+        */
+
+        if (
+            window.location.hash.substring(1)
+            !== page
+        ) {
+
+            window.location.hash = page;
+
+        }
+
+    },
+        showPage(page) {
+
+        const element =
+            document.getElementById(
+                `page-${page}`
+            );
+
+        if (element) {
+
+            element.classList.add(
+                "active-page"
+            );
+
+        }
+
+    },
+
+
+    hidePages() {
+
+        this.cache.pages.forEach(section => {
+
+            section.classList.remove(
+                "active-page"
+            );
+
+        });
 
     },
 
@@ -92,5 +226,25 @@ const Router = {
         this.go(App.state.page);
 
     }
+        restoreFromHash() {
+
+        const page =
+            window.location.hash.substring(1);
+
+
+        if (page) {
+
+            this.go(page);
+
+        }
+        else {
+
+            this.go(
+                CONFIG.DEFAULT_PAGE
+            );
+
+        }
+
+    },
 
 };
