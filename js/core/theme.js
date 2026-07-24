@@ -2,44 +2,71 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: theme.js
-Version: 2.0.0
+Version: 2.1.0
 
 Purpose:
-Theme manager.
+Manages application theme (Light / Dark).
 ------------------------------------------------------------
 */
 
 const Theme = {
 
+    /* ======================================================
+       Cached Elements
+    ====================================================== */
+
+    cache: {
+
+        toggleButton: null
+
+    },
+
+    /* ======================================================
+       State
+    ====================================================== */
+
     current: CONFIG.DEFAULT_THEME,
 
+    /* ======================================================
+       Initialization
+    ====================================================== */
+
     /**
-     * Initialize theme
+     * Initialize Theme
      */
     init() {
 
-    this.current = Storage.load(
-        "theme",
-        CONFIG.DEFAULT_THEME
-    );
+        // Cache DOM elements
+        this.cache.toggleButton =
+            Utils.byId("theme-toggle");
 
-    const button = Utils.byId("theme-toggle");
+        // Load saved theme
+        this.current = Storage.load(
+            CONFIG.STORAGE_KEYS.theme,
+            CONFIG.DEFAULT_THEME
+        );
 
-    if (button) {
+        // Attach event listeners
+        if (this.cache.toggleButton) {
 
-        button.addEventListener("click", () => {
+            this.cache.toggleButton.addEventListener(
+                "click",
+                () => this.toggle()
+            );
 
-            this.toggle();
+        }
 
-        });
+        // Apply current theme
+        this.apply();
 
-    }
+    },
 
-    this.apply();
+    /* ======================================================
+       Public Methods
+    ====================================================== */
 
-},
     /**
-     * Apply theme
+     * Apply current theme
      */
     apply() {
 
@@ -53,17 +80,18 @@ const Theme = {
     },
 
     /**
-     * Toggle theme
+     * Toggle between Light and Dark themes
      */
     toggle() {
 
         this.current =
+
             this.current === "light"
                 ? "dark"
                 : "light";
 
         Storage.save(
-            "theme",
+            CONFIG.STORAGE_KEYS.theme,
             this.current
         );
 
@@ -71,17 +99,23 @@ const Theme = {
 
     },
 
+    /* ======================================================
+       Private Helper Methods
+    ====================================================== */
+
     /**
-     * Update button icon
+     * Update theme button icon
      */
     updateIcon() {
 
-        const button =
-            Utils.byId("theme-toggle");
+        if (!this.cache.toggleButton) {
 
-        if (!button) return;
+            return;
 
-        button.textContent =
+        }
+
+        this.cache.toggleButton.textContent =
+
             this.current === "dark"
                 ? "☀️"
                 : "🌙";
