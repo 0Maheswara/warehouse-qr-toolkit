@@ -1,1 +1,289 @@
-#
+/*
+------------------------------------------------------------
+Warehouse Operations Toolkit
+File: components.css
+Version: 2.0.0
+
+Purpose:
+Reusable UI Components
+------------------------------------------------------------
+*/
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.card{
+
+    background:var(--surface);
+
+    border-radius:var(--radius);
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* ==========================================================
+   ICON BUTTON
+========================================================== */
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:var(--radius-small);
+
+    background:transparent;
+
+    transition:var(--transition);
+
+}
+
+.icon-button:hover{
+
+    background:#eeeeee;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:28px;
+
+}
+
+
+.nav-heading{
+
+    margin-top:24px;
+
+    margin-bottom:10px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:var(--text-light);
+
+    letter-spacing:1px;
+
+}
+
+
+.nav-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.sidebar-footer{
+
+    margin-top:40px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+/* ==========================================================
+   NAVIGATION BUTTON
+========================================================== */
+
+.nav-button{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:12px 14px;
+
+    border:none;
+
+    border-radius:var(--radius-small);
+
+    background:transparent;
+
+    transition:var(--transition);
+
+    text-align:left;
+
+    font-size:15px;
+
+}
+
+.nav-button:hover{
+
+    background:#eef4ff;
+
+}
+
+
+.nav-button.active{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+.nav-button.disabled{
+
+    opacity:.45;
+
+    cursor:not-allowed;
+
+}
+
+
+.nav-icon{
+
+    width:28px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+
+.nav-text{
+
+    flex:1;
+
+}
+
+
+/* ==========================================================
+   STATUS BADGE
+========================================================== */
+
+.status-badge{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    padding:8px 16px;
+
+    background:#fff7d6;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   MODULE LIST
+========================================================== */
+
+.module-list{
+
+    margin-top:15px;
+
+}
+
+
+.module-list li{
+
+    padding:10px 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+/* ==========================================================
+   FORM ELEMENTS
+========================================================== */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-small);
+
+    font:inherit;
+
+    margin-bottom:16px;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+}
+
+
+/* ==========================================================
+   PRIMARY BUTTON
+========================================================== */
+
+.primary-button{
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:var(--radius-small);
+
+    background:var(--primary);
+
+    color:white;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.primary-button:hover{
+
+    background:var(--primary-hover);
+
+}
