@@ -2,7 +2,7 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: theme.js
-Version: 2.2.0
+Version: 3.0.0
 
 Purpose:
 Manages application theme (Light / Dark).
@@ -10,6 +10,18 @@ Manages application theme (Light / Dark).
 */
 
 const Theme = {
+
+    /* ======================================================
+       Metadata
+    ====================================================== */
+
+    meta: {
+
+        name: "Theme",
+
+        version: "3.0.0"
+
+    },
 
     /* ======================================================
        Cached Elements
@@ -25,37 +37,47 @@ const Theme = {
        State
     ====================================================== */
 
-    current: CONFIG.DEFAULT_THEME,
+    state: {
+
+        status: CONFIG.MODULE_STATUS.IDLE,
+
+        current: CONFIG.DEFAULT_THEME
+
+    },
 
     /* ======================================================
        Initialization
     ====================================================== */
 
     /**
-     * Initialize Theme
+     * Initialize Theme.
      */
     init() {
 
-        // Cache DOM elements
-        this.cache.toggleButton = Utils.query(
-            CONFIG.SELECTORS.themeToggle
-        );
+        if (
 
-        // Load saved theme
-        this.current = Storage.load(
-            CONFIG.STORAGE_KEYS.theme,
-            CONFIG.DEFAULT_THEME
-        );
+            this.state.status ===
+            CONFIG.MODULE_STATUS.READY
 
-        // Attach event listeners
-        Utils.on(
-            this.cache.toggleButton,
-            "click",
-            () => this.toggle()
-        );
+        ) {
 
-        // Apply current theme
+            return;
+
+        }
+
+        this.state.status =
+            CONFIG.MODULE_STATUS.INITIALIZING;
+
+        this.cacheElements();
+
+        this.bindEvents();
+
+        this.loadTheme();
+
         this.apply();
+
+        this.state.status =
+            CONFIG.MODULE_STATUS.READY;
 
     },
 
@@ -64,34 +86,43 @@ const Theme = {
     ====================================================== */
 
     /**
-     * Apply current theme
+     * Apply current theme.
      */
     apply() {
 
-    Utils.toggleClass(
-        document.body,
-        "dark",
-        this.current === "dark"
-    );
+        Utils.toggleClass(
 
-    this.updateIcon();
+            document.body,
 
-},
+            "dark",
+
+            this.state.current === "dark"
+
+        );
+
+        this.updateIcon();
+
+    },
 
     /**
-     * Toggle between Light and Dark themes
+     * Toggle theme.
      */
     toggle() {
 
-        this.current =
+        this.state.current =
 
-            this.current === "light"
+            this.state.current === "light"
+
                 ? "dark"
+
                 : "light";
 
         Storage.save(
+
             CONFIG.STORAGE_KEYS.theme,
-            this.current
+
+            this.state.current
+
         );
 
         this.apply();
@@ -99,11 +130,66 @@ const Theme = {
     },
 
     /* ======================================================
-       Private Helper Methods
+       Private Methods
     ====================================================== */
 
     /**
-     * Update theme button icon
+     * Cache DOM elements.
+     */
+    cacheElements() {
+
+        this.cache.toggleButton =
+
+            Utils.query(
+
+                CONFIG.SELECTORS.themeToggle
+
+            );
+
+    },
+
+    /**
+     * Register event listeners.
+     */
+    bindEvents() {
+
+        if (!this.cache.toggleButton) {
+
+            return;
+
+        }
+
+        Utils.on(
+
+            this.cache.toggleButton,
+
+            "click",
+
+            () => this.toggle()
+
+        );
+
+    },
+
+    /**
+     * Load saved theme.
+     */
+    loadTheme() {
+
+        this.state.current =
+
+            Storage.load(
+
+                CONFIG.STORAGE_KEYS.theme,
+
+                CONFIG.DEFAULT_THEME
+
+            );
+
+    },
+
+    /**
+     * Update toggle button icon.
      */
     updateIcon() {
 
@@ -115,8 +201,10 @@ const Theme = {
 
         this.cache.toggleButton.textContent =
 
-            this.current === "dark"
+            this.state.current === "dark"
+
                 ? "☀️"
+
                 : "🌙";
 
     }
