@@ -185,7 +185,7 @@ const Router = {
         }
 
     },
-        showPage(page) {
+            showPage(page) {
 
         const element =
             document.getElementById(
@@ -215,18 +215,8 @@ const Router = {
 
     },
 
-    current() {
 
-        return App.state.page;
-
-    },
-
-    reload() {
-
-        this.go(App.state.page);
-
-    }
-        restoreFromHash() {
+    restoreFromHash() {
 
         const page =
             window.location.hash.substring(1);
@@ -246,5 +236,19 @@ const Router = {
         }
 
     },
+
+
+    current() {
+
+        return App.state.page;
+
+    },
+
+
+    reload() {
+
+        this.go(App.state.page);
+
+    }
 
 };
