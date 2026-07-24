@@ -68,23 +68,15 @@ const Theme = {
      */
     apply() {
 
-        Utils.toggleClass(
-            document.body,
-            "dark"
-        );
+    Utils.toggleClass(
+        document.body,
+        "dark",
+        this.current === "dark"
+    );
 
-        if (this.current !== "dark") {
+    this.updateIcon();
 
-            Utils.removeClass(
-                document.body,
-                "dark"
-            );
-
-        }
-
-        this.updateIcon();
-
-    },
+},
 
     /**
      * Toggle between Light and Dark themes
