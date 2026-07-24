@@ -20,11 +20,11 @@ const App = {
        State
     ====================================================== */
 
-    state: {
+  state: {
 
-        initialized: false
+    status: CONFIG.MODULE_STATUS.IDLE
 
-    },
+},
 
     /* ======================================================
        Initialization
@@ -33,26 +33,53 @@ const App = {
     /**
      * Initialize application.
      */
-    init() {
+init() {
 
-        if (this.state.initialized) {
+    if (
 
-            return;
+        this.state.status ===
 
-        }
+        CONFIG.MODULE_STATUS.READY
+
+    ) {
+
+        return;
+
+    }
+
+    this.state.status =
+
+        CONFIG.MODULE_STATUS.INITIALIZING;
+
+    try {
 
         this.initializeCore();
 
         this.initializeModules();
 
-        this.state.initialized = true;
+        this.state.status =
+
+            CONFIG.MODULE_STATUS.READY;
 
         console.log(
+
             `${CONFIG.APP_NAME} v${CONFIG.VERSION} started`
+
         );
 
-    },
+    }
 
+    catch (error) {
+
+        this.state.status =
+
+            CONFIG.MODULE_STATUS.ERROR;
+
+        console.error(error);
+
+    }
+
+},
     /* ======================================================
        Private Methods
     ====================================================== */
