@@ -2,14 +2,14 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: router.js
-Version: 2.1.0
+Version: 3.0.0
 
 Purpose:
 Single Page Application (SPA) Router.
 
 Responsibilities:
 - Cache DOM elements
-- Bind navigation events
+- Register navigation events
 - Navigate between pages
 - Restore previous page
 - Synchronize browser hash
@@ -17,6 +17,18 @@ Responsibilities:
 */
 
 const Router = {
+
+    /* ======================================================
+       Metadata
+    ====================================================== */
+
+    meta: {
+
+        name: "Router",
+
+        version: "3.0.0"
+
+    },
 
     /* ======================================================
        Constants
@@ -42,6 +54,8 @@ const Router = {
 
     state: {
 
+        status: CONFIG.MODULE_STATUS.IDLE,
+
         currentPage: CONFIG.DEFAULT_PAGE
 
     },
@@ -55,11 +69,28 @@ const Router = {
      */
     init() {
 
+        if (
+
+            this.state.status ===
+            CONFIG.MODULE_STATUS.READY
+
+        ) {
+
+            return;
+
+        }
+
+        this.state.status =
+            CONFIG.MODULE_STATUS.INITIALIZING;
+
         this.cacheElements();
 
         this.bindEvents();
 
         this.restoreState();
+
+        this.state.status =
+            CONFIG.MODULE_STATUS.READY;
 
     },
 
@@ -73,30 +104,34 @@ const Router = {
     cacheElements() {
 
         this.cache.pages = Utils.queryAll(
+
             CONFIG.SELECTORS.pages
+
         );
 
         this.cache.navButtons = Utils.queryAll(
+
             CONFIG.SELECTORS.navButtons
+
         );
 
     },
 
     /**
-     * Register all router event listeners.
+     * Register all router events.
      */
     bindEvents() {
 
         this.cache.navButtons.forEach(button => {
 
             Utils.on(
+
                 button,
+
                 "click",
-                () => {
 
-                    this.onNavigationClick(button);
+                () => this.onNavigationClick(button)
 
-                }
             );
 
         });
@@ -107,11 +142,7 @@ const Router = {
 
             "hashchange",
 
-            () => {
-
-                this.onHashChange();
-
-            }
+            () => this.onHashChange()
 
         );
 
@@ -138,6 +169,13 @@ const Router = {
 
         }
 
+        // Already on this page
+        if (this.state.currentPage === page) {
+
+            return;
+
+        }
+
         // Update state
         this.state.currentPage = page;
 
@@ -148,10 +186,13 @@ const Router = {
 
         this.updateNavigation(page);
 
-        // Save page
+        // Save current page
         Storage.save(
+
             CONFIG.STORAGE_KEYS.lastPage,
+
             page
+
         );
 
         // Update browser hash
@@ -176,7 +217,9 @@ const Router = {
     reload() {
 
         this.go(
+
             this.state.currentPage
+
         );
 
     },
@@ -197,15 +240,20 @@ const Router = {
             ||
 
             Storage.load(
+
                 CONFIG.STORAGE_KEYS.lastPage,
+
                 this.DEFAULT_PAGE
+
             );
+
+        this.state.currentPage = "";
 
         this.go(page);
 
     },
     /**
-     * Hide all pages.
+     * Hide all application pages.
      */
     hidePages() {
 
@@ -221,7 +269,7 @@ const Router = {
     },
 
     /**
-     * Show a page.
+     * Display requested page.
      *
      * @param {string} page
      */
@@ -232,6 +280,10 @@ const Router = {
         );
 
         if (!element) {
+
+            console.warn(
+                `Router: Page "${page}" not found.`
+            );
 
             return;
 
@@ -245,7 +297,7 @@ const Router = {
     },
 
     /**
-     * Update navigation button highlight.
+     * Update active navigation button.
      *
      * @param {string} page
      */
@@ -272,7 +324,7 @@ const Router = {
     },
 
     /**
-     * Update browser URL hash.
+     * Synchronize browser hash.
      *
      * @param {string} page
      */
@@ -299,7 +351,7 @@ const Router = {
     ====================================================== */
 
     /**
-     * Navigation button click.
+     * Navigation button clicked.
      *
      * @param {HTMLElement} button
      */
@@ -321,6 +373,18 @@ const Router = {
             window.location.hash.substring(1);
 
         if (!page) {
+
+            return;
+
+        }
+
+        if (!CONFIG.PAGES[page]) {
+
+            return;
+
+        }
+
+        if (page === this.state.currentPage) {
 
             return;
 
