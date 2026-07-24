@@ -56,10 +56,10 @@ const Storage = {
 
         catch (error) {
 
-            console.error(
-                "Storage.save():",
-                error
-            );
+            Logger.error(
+                "Storage.save()",
+        error
+        );
 
             return false;
 
@@ -95,11 +95,10 @@ const Storage = {
 
         catch (error) {
 
-            console.error(
-                "Storage.load():",
-                error
+            Logger.error(
+                 "Storage.load()",
+            error
             );
-
             return defaultValue;
 
         }
