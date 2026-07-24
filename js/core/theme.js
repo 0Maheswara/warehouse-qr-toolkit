@@ -18,15 +18,26 @@ const Theme = {
      */
     init() {
 
-        this.current = Storage.load(
-            "theme",
-            CONFIG.DEFAULT_THEME
-        );
+    this.current = Storage.load(
+        "theme",
+        CONFIG.DEFAULT_THEME
+    );
 
-        this.apply();
+    const button = Utils.byId("theme-toggle");
 
-    },
+    if (button) {
 
+        button.addEventListener("click", () => {
+
+            this.toggle();
+
+        });
+
+    }
+
+    this.apply();
+
+},
     /**
      * Apply theme
      */
