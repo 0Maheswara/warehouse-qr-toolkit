@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Warehouse QR Toolkit</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f8;
+    color: #222;
+}
+
+/* Header */
+
+header {
+    background: #1f2937;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+
+/* Navigation */
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: white;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+nav button {
+
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: #e5e7eb;
+    cursor: pointer;
+    font-size: 15px;
+
+}
+
+
+nav button:hover {
+
+    background: #2563eb;
+    color:white;
+
+}
+
+
+/* Main container */
+
+.container {
+
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+
+}
+
+
+/* Pages */
+
+.page {
+
+    display:none;
+
+}
+
+
+.page.active {
+
+    display:block;
+
+}
+
+
+/* Cards */
+
+.card {
+
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+
+}
+
+
+.card h2 {
+
+    margin-top:0;
+
+}
+
+
+/* Dashboard buttons */
+
+.tool-grid {
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+
+}
+
+
+.tool-card {
+
+    padding:25px;
+    border-radius:15px;
+    background:#ffffff;
+    text-align:center;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+
+}
+
+
+.tool-card:hover {
+
+    transform:translateY(-3px);
+
+}
+
+
+/* Dark mode */
+
+.dark {
+
+    background:#111827;
+    color:white;
+
+}
+
+
+.dark .card,
+.dark .tool-card,
+.dark nav {
+
+    background:#1f2937;
+    color:white;
+
+}
+
+
+.dark nav button {
+
+    background:#374151;
+    color:white;
+
+}
+
+
+
+.dark-mode {
+
+    position:absolute;
+    right:15px;
+    top:15px;
+    cursor:pointer;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    nav button {
+
+        width:45%;
+
+    }
+
+    header h1 {
+
+        font-size:18px;
+
+    }
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<button class="dark-mode" onclick="toggleDark()">
+🌙
+</button>
+
+<h1>
+Warehouse QR Toolkit
+</h1>
+
+</header>
+
+
+
+<nav>
+
+<button onclick="showPage('home')">
+🏠 Dashboard
+</button>
+
+
+<button onclick="showPage('item')">
+📦 Item QR
+</button>
+
+
+<button onclick="showPage('bulk')">
+🗂 Bulk QR
+</button>
+
+
+<button onclick="showPage('location')">
+📍 Location QR
+</button>
+
+
+</nav>
+
+
+
+
+<div class="container">
+
+
+
+<!-- Dashboard -->
+
+<section id="home" class="page active">
+
+
+<div class="card">
+
+<h2>
+Welcome
+</h2>
+
+<p>
+Generate warehouse QR codes quickly and easily.
+</p>
+
+
+</div>
+
+
+
+<div class="tool-grid">
+
+
+<div class="tool-card" onclick="showPage('item')">
+
+<h2>
+📦
+</h2>
+
+<h3>
+Item QR
+</h3>
+
+<p>
+Generate QR for individual items.
+</p>
+
+</div>
+
+
+
+<div class="tool-card" onclick="showPage('bulk')">
+
+<h2>
+🗂
+</h2>
+
+<h3>
+Bulk QR
+</h3>
+
+<p>
+Generate multiple QR codes together.
+</p>
+
+</div>
+
+
+
+
+<div class="tool-card" onclick="showPage('location')">
+
+<h2>
+📍
+</h2>
+
+<h3>
+Location QR
+</h3>
+
+<p>
+Generate rack and bin labels.
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- Item QR -->
+
+
+<section id="item" class="page">
+
+
+<div class="card">
+
+<h2>
+📦 Item QR Generator
+</h2>
+
+
+<p>
+QR generation module will be added in Phase 2.
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- Bulk QR -->
+
+
+<section id="bulk" class="page">
+
+
+<div class="card">
+
+
+<h2>
+🗂 Bulk QR Generator
+</h2>
+
+
+<p>
+Bulk QR generation module will be added in Phase 2.
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- Location QR -->
+
+
+<section id="location" class="page">
+
+
+<div class="card">
+
+
+<h2>
+📍 Location QR Generator
+</h2>
+
+
+<p>
+Location QR generation module will be added in Phase 2.
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function showPage(pageId){
+
+
+    let pages=document.querySelectorAll(".page");
+
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+
+
+    document.getElementById(pageId)
+    .classList.add("active");
+
+
+}
+
+
+
+function toggleDark(){
+
+
+    document.body.classList.toggle("dark");
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
