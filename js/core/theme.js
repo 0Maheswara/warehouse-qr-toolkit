@@ -38,7 +38,9 @@ const Theme = {
 
         // Cache DOM elements
         this.cache.toggleButton =
-            Utils.byId("theme-toggle");
+    document.querySelector(
+        CONFIG.SELECTORS.themeToggle
+    );
 
         // Load saved theme
         this.current = Storage.load(
