@@ -185,7 +185,7 @@ const Router = {
         }
 
     },
-            showPage(page) {
+                showPage(page) {
 
         const element =
             document.getElementById(
