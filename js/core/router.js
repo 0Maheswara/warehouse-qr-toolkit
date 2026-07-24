@@ -36,6 +36,9 @@ const Router = {
 
     init() {
 
+        console.log("Router Init");
+        console.log(document.querySelectorAll(".page"));
+
         // Cache page containers
         this.cache.pages = [
             ...document.querySelectorAll(".page")
