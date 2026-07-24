@@ -49,4 +49,56 @@ const CONFIG = {
 
 };
 
+/* ==========================================================
+   Pages
+========================================================== */
+
+CONFIG.PAGES = {
+
+    dashboard: {
+        id: "page-dashboard",
+        title: "Dashboard"
+    },
+
+    item: {
+        id: "page-item",
+        title: "Item QR"
+    },
+
+    bag: {
+        id: "page-bag",
+        title: "Bag QR"
+    },
+
+    location: {
+        id: "page-location",
+        title: "Location QR"
+    },
+
+    bulk: {
+        id: "page-bulk",
+        title: "Bulk QR"
+    }
+
+};
+
+
+/* ==========================================================
+   Module Registry
+========================================================== */
+
+CONFIG.MODULES = {
+
+    dashboard: null,
+
+    item: null,
+
+    bag: null,
+
+    location: null,
+
+    bulk: null
+
+};
+
 Object.freeze(CONFIG);
