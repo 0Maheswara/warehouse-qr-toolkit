@@ -2,26 +2,44 @@
 ------------------------------------------------------------
 Warehouse Operations Toolkit
 File: storage.js
-Version: 2.0.0
+Version: 2.1.0
 
 Purpose:
 Application storage wrapper.
+Provides a centralized interface for Local Storage.
 ------------------------------------------------------------
 */
 
 const Storage = {
 
+    /* ======================================================
+       Constants
+    ====================================================== */
+
+    prefix: CONFIG.STORAGE_PREFIX,
+
+    /* ======================================================
+       Public Methods
+    ====================================================== */
+
     /**
-     * Create application storage key
+     * Create an application storage key.
+     *
+     * @param {string} name
+     * @returns {string}
      */
     key(name) {
 
-        return `${CONFIG.STORAGE_PREFIX}_${name}`;
+        return `${this.prefix}_${name}`;
 
     },
 
     /**
-     * Save value
+     * Save a value.
+     *
+     * @param {string} name
+     * @param {*} value
+     * @returns {boolean}
      */
     save(name, value) {
 
@@ -34,9 +52,14 @@ const Storage = {
 
             return true;
 
-        } catch (error) {
+        }
 
-            console.error("Storage save failed:", error);
+        catch (error) {
+
+            console.error(
+                "Storage.save():",
+                error
+            );
 
             return false;
 
@@ -45,25 +68,37 @@ const Storage = {
     },
 
     /**
-     * Load value
+     * Load a value.
+     *
+     * @param {string} name
+     * @param {*} defaultValue
+     * @returns {*}
      */
     load(name, defaultValue = null) {
 
         try {
 
-            const value = localStorage.getItem(this.key(name));
+            const storedValue =
+                localStorage.getItem(
+                    this.key(name)
+                );
 
-            if (value === null) {
+            if (storedValue === null) {
 
                 return defaultValue;
 
             }
 
-            return JSON.parse(value);
+            return JSON.parse(storedValue);
 
-        } catch (error) {
+        }
 
-            console.error("Storage load failed:", error);
+        catch (error) {
+
+            console.error(
+                "Storage.load():",
+                error
+            );
 
             return defaultValue;
 
@@ -72,37 +107,53 @@ const Storage = {
     },
 
     /**
-     * Remove value
+     * Remove a stored value.
+     *
+     * @param {string} name
      */
     remove(name) {
 
-        localStorage.removeItem(this.key(name));
+        localStorage.removeItem(
+            this.key(name)
+        );
 
     },
 
     /**
-     * Check if key exists
+     * Check whether a key exists.
+     *
+     * @param {string} name
+     * @returns {boolean}
      */
     has(name) {
 
-        return localStorage.getItem(this.key(name)) !== null;
+        return (
+
+            localStorage.getItem(
+                this.key(name)
+            ) !== null
+
+        );
 
     },
 
     /**
-     * Clear only application data
+     * Clear all application data.
      */
     clear() {
 
-        const prefix = CONFIG.STORAGE_PREFIX + "_";
+        const prefix =
+            `${this.prefix}_`;
 
         Object.keys(localStorage).forEach(key => {
 
-            if (key.startsWith(prefix)) {
+            if (!key.startsWith(prefix)) {
 
-                localStorage.removeItem(key);
+                return;
 
             }
+
+            localStorage.removeItem(key);
 
         });
 
