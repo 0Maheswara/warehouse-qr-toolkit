@@ -161,10 +161,9 @@ const Router = {
         // Validate page
         if (!CONFIG.PAGES[page]) {
 
-            console.warn(
-                `Router: Invalid page "${page}"`
+           Logger.warn(
+            `Invalid page "${page}"`
             );
-
             return;
 
         }
@@ -281,8 +280,8 @@ const Router = {
 
         if (!element) {
 
-            console.warn(
-                `Router: Page "${page}" not found.`
+           Logger.warn(
+                `Page "${page}" not found.`
             );
 
             return;
