@@ -1,1 +1,213 @@
-#
+/*
+------------------------------------------------------------
+Warehouse Operations Toolkit
+File: layout.css
+Version: 2.0.0
+
+Purpose:
+Application layout.
+------------------------------------------------------------
+*/
+
+
+/* ==========================================================
+   APP
+========================================================== */
+
+#app{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.app-header{
+
+    height:var(--header-height);
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    box-shadow:var(--shadow);
+
+    z-index:100;
+
+}
+
+
+
+.header-left,
+
+.header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+
+#app-title{
+
+    font-size:22px;
+
+}
+
+
+
+#app-version{
+
+    font-size:14px;
+
+    color:var(--text-light);
+
+}
+
+
+
+/* ==========================================================
+   BODY LAYOUT
+========================================================== */
+
+.app-layout{
+
+    flex:1;
+
+    display:flex;
+
+}
+
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+#sidebar{
+
+    width:var(--sidebar-width);
+
+    background:var(--surface);
+
+    border-right:1px solid var(--border);
+
+    padding:20px;
+
+}
+
+
+
+.nav-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+#content{
+
+    flex:1;
+
+    padding:30px;
+
+}
+
+
+
+.page{
+
+    display:none;
+
+}
+
+
+
+.active-page{
+
+    display:block;
+
+}
+
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.app-footer{
+
+    height:48px;
+
+    background:var(--surface);
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    font-size:13px;
+
+    color:var(--text-light);
+
+}
+
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width:900px){
+
+    .app-layout{
+
+        flex-direction:column;
+
+    }
+
+    #sidebar{
+
+        width:100%;
+
+        border-right:none;
+
+        border-bottom:1px solid var(--border);
+
+    }
+
+}
