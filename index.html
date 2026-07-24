@@ -4,13 +4,16 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Warehouse Operations Toolkit</title>
 
-    <meta name="description" content="Warehouse QR and Label Management Toolkit">
+    <meta name="description"
+          content="Warehouse QR and Label Management Toolkit">
 
     <!-- CSS -->
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
@@ -20,258 +23,426 @@
 
 <body>
 
+<div id="app">
+
     <!-- ======================================================
-         Application
+         HEADER
     ======================================================= -->
 
-    <div id="app">
+    <header class="app-header">
 
-        <!-- ================= HEADER ================= -->
+        <div class="header-left">
 
-        <header class="app-header">
+            <button id="menu-toggle"
+                    class="icon-button"
+                    aria-label="Toggle Navigation">
 
-            <div class="header-left">
+                ☰
 
-                <button id="menu-toggle"
-                        class="icon-button"
-                        aria-label="Toggle Navigation">
+            </button>
 
-                    ☰
-
-                </button>
-
-                <h1 id="app-title">
-                    Warehouse Operations Toolkit
-                </h1>
-
-            </div>
-
-            <div class="header-right">
-
-                <span id="app-version">
-                    v2.0.0
-                </span>
-
-                <button id="theme-toggle"
-                        class="icon-button"
-                        aria-label="Toggle Theme">
-
-                    🌙
-
-                </button>
-
-            </div>
-
-        </header>
-
-        <!-- ================= LAYOUT ================= -->
-
-        <div class="app-layout">
-
-            <!-- Sidebar -->
-
-            <aside id="sidebar">
-
-                <nav>
-
-                    <ul class="nav-list">
-
-                        <li>
-                            <button class="nav-button active"
-                                    data-page="dashboard">
-
-                                🏠 Dashboard
-
-                            </button>
-                        </li>
-
-                        <li>
-                            <button class="nav-button"
-                                    data-page="item">
-
-                                📦 Item QR
-
-                            </button>
-                        </li>
-
-                        <li>
-                            <button class="nav-button"
-                                    data-page="bag">
-
-                                👜 Bag QR
-
-                            </button>
-                        </li>
-
-                        <li>
-                            <button class="nav-button"
-                                    data-page="location">
-
-                                📍 Location QR
-
-                            </button>
-                        </li>
-
-                        <li>
-                            <button class="nav-button"
-                                    data-page="bulk">
-
-                                🗂 Bulk QR
-
-                            </button>
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-            </aside>
-
-            <!-- Main Content -->
-
-            <main id="content">
-
-                <!-- Dashboard -->
-
-                <section id="dashboard-page"
-                         class="page active-page">
-
-                    <div class="card">
-
-                        <h2>
-                            Welcome
-                        </h2>
-
-                        <p>
-
-                            Welcome to the Warehouse Operations Toolkit.
-
-                        </p>
-
-                        <p>
-
-                            This application is being built step by step
-                            with reusable components and a shared QR engine.
-
-                        </p>
-
-                        <hr>
-
-                        <h3>
-                            Current Modules
-                        </h3>
-
-                        <ul>
-
-                            <li>📦 Item QR</li>
-                            <li>👜 Bag QR</li>
-                            <li>📍 Location QR</li>
-                            <li>🗂 Bulk QR</li>
-
-                        </ul>
-
-                    </div>
-
-                </section>
-
-                <!-- Item -->
-
-                <section id="item-page"
-                         class="page">
-
-                    <div class="card">
-
-                        <h2>📦 Item QR</h2>
-
-                        <p>
-                            Module coming soon...
-                        </p>
-
-                    </div>
-
-                </section>
-
-                <!-- Bag -->
-
-                <section id="bag-page"
-                         class="page">
-
-                    <div class="card">
-
-                        <h2>👜 Bag QR</h2>
-
-                        <p>
-                            Module coming soon...
-                        </p>
-
-                    </div>
-
-                </section>
-
-                <!-- Location -->
-
-                <section id="location-page"
-                         class="page">
-
-                    <div class="card">
-
-                        <h2>📍 Location QR</h2>
-
-                        <p>
-                            Module coming soon...
-                        </p>
-
-                    </div>
-
-                </section>
-
-                <!-- Bulk -->
-
-                <section id="bulk-page"
-                         class="page">
-
-                    <div class="card">
-
-                        <h2>🗂 Bulk QR</h2>
-
-                        <p>
-                            Module coming soon...
-                        </p>
-
-                    </div>
-
-                </section>
-
-            </main>
-
-        </div>
-
-        <!-- ================= FOOTER ================= -->
-
-        <footer class="app-footer">
-
-            <span>
+            <h1 id="app-title">
 
                 Warehouse Operations Toolkit
 
+            </h1>
+
+        </div>
+
+        <div class="header-right">
+
+            <span id="app-version">
+
+                v2.0.0
+
             </span>
 
-            <span>
+            <button id="theme-toggle"
+                    class="icon-button"
+                    aria-label="Toggle Theme">
 
-                Version 2.0.0
+                🌙
 
-            </span>
+            </button>
 
-        </footer>
+        </div>
+
+    </header>
+
+    <!-- ======================================================
+         MAIN LAYOUT
+    ======================================================= -->
+
+    <div class="app-layout">
+
+        <!-- ==============================================
+             SIDEBAR
+        =============================================== -->
+
+        <aside id="sidebar">
+
+            <div class="sidebar-title">
+
+                Warehouse QR Tools
+
+            </div>
+
+            <!-- Dashboard -->
+
+            <nav class="nav-group">
+
+                <button id="nav-dashboard"
+                        class="nav-button active"
+                        data-page="dashboard">
+
+                    <span class="nav-icon">🏠</span>
+
+                    <span class="nav-text">
+
+                        Dashboard
+
+                    </span>
+
+                </button>
+
+            </nav>
+
+            <!-- QR Modules -->
+
+            <div class="nav-heading">
+
+                QR GENERATORS
+
+            </div>
+
+            <nav class="nav-group">
+
+                <button id="nav-item"
+                        class="nav-button"
+                        data-page="item">
+
+                    <span class="nav-icon">
+
+                        📦
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Item QR
+
+                    </span>
+
+                </button>
+
+                <button id="nav-bag"
+                        class="nav-button"
+                        data-page="bag">
+
+                    <span class="nav-icon">
+
+                        👜
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Bag QR
+
+                    </span>
+
+                </button>
+
+                <button id="nav-location"
+                        class="nav-button"
+                        data-page="location">
+
+                    <span class="nav-icon">
+
+                        📍
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Location QR
+
+                    </span>
+
+                </button>
+
+                <button id="nav-bulk"
+                        class="nav-button"
+                        data-page="bulk">
+
+                    <span class="nav-icon">
+
+                        🗂
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Bulk QR
+
+                    </span>
+
+                </button>
+
+            </nav>
+
+            <!-- Future -->
+
+            <div class="nav-heading">
+
+                TOOLS
+
+            </div>
+
+            <nav class="nav-group">
+
+                <button class="nav-button disabled">
+
+                    <span class="nav-icon">
+
+                        🚧
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Coming Soon
+
+                    </span>
+
+                </button>
+
+            </nav>
+
+            <!-- Bottom -->
+
+            <div class="sidebar-footer">
+
+                <button id="nav-theme"
+                        class="nav-button">
+
+                    <span class="nav-icon">
+
+                        🌙
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        Theme
+
+                    </span>
+
+                </button>
+
+                <button id="nav-about"
+                        class="nav-button">
+
+                    <span class="nav-icon">
+
+                        ℹ️
+
+                    </span>
+
+                    <span class="nav-text">
+
+                        About
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </aside>        
+        <!-- ======================================================
+             MAIN CONTENT
+        ======================================================= -->
+
+        <main id="content">
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section id="page-dashboard"
+                     class="page active-page">
+
+                <div class="card">
+
+                    <h2>🏠 Dashboard</h2>
+
+                    <p>
+
+                        Welcome to the Warehouse Operations Toolkit.
+
+                    </p>
+
+                    <p>
+
+                        This application is designed to save time during
+                        warehouse operations through reusable tools and
+                        a shared QR engine.
+
+                    </p>
+
+                    <hr>
+
+                    <h3>Current Modules</h3>
+
+                    <ul class="module-list">
+
+                        <li>📦 Item QR Generator</li>
+                        <li>👜 Bag QR Generator</li>
+                        <li>📍 Location QR Generator</li>
+                        <li>🗂 Bulk QR Generator</li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+            <!-- ================= ITEM ================= -->
+
+            <section id="page-item"
+                     class="page">
+
+                <div class="card">
+
+                    <h2>📦 Item QR</h2>
+
+                    <p>
+
+                        Generate replacement Item QR labels.
+
+                    </p>
+
+                    <div class="status-badge">
+
+                        Coming Soon
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ================= BAG ================= -->
+
+            <section id="page-bag"
+                     class="page">
+
+                <div class="card">
+
+                    <h2>👜 Bag QR</h2>
+
+                    <p>
+
+                        Generate unique warehouse Bag QR labels.
+
+                    </p>
+
+                    <div class="status-badge">
+
+                        Coming Soon
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ================= LOCATION ================= -->
+
+            <section id="page-location"
+                     class="page">
+
+                <div class="card">
+
+                    <h2>📍 Location QR</h2>
+
+                    <p>
+
+                        Generate warehouse location labels.
+
+                    </p>
+
+                    <div class="status-badge">
+
+                        Coming Soon
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ================= BULK ================= -->
+
+            <section id="page-bulk"
+                     class="page">
+
+                <div class="card">
+
+                    <h2>🗂 Bulk QR</h2>
+
+                    <p>
+
+                        Generate multiple QR labels together.
+
+                    </p>
+
+                    <div class="status-badge">
+
+                        Coming Soon
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <!-- JavaScript -->
+    <!-- ======================================================
+         FOOTER
+    ======================================================= -->
 
-    <script src="js/storage.js"></script>
-    <script src="js/router.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+    <footer class="app-footer">
+
+        <span>
+
+            Warehouse Operations Toolkit
+
+        </span>
+
+        <span>
+
+            Version 2.0.0
+
+        </span>
+
+    </footer>
+
+</div>
+
+<!-- ======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script src="js/storage.js"></script>
+
+<script src="js/router.js"></script>
+
+<script src="js/ui.js"></script>
+
+<script src="js/app.js"></script>
 
 </body>
 
