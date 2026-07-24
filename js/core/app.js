@@ -100,7 +100,7 @@ init() {
      */
     initializeModules() {
 
-        // Dashboard.init();
+        Dashboard.init();
 
         // Item.init();
 
