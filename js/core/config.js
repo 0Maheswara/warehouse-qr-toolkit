@@ -83,22 +83,4 @@ CONFIG.PAGES = {
 };
 
 
-/* ==========================================================
-   Module Registry
-========================================================== */
-
-CONFIG.MODULES = {
-
-    dashboard: null,
-
-    item: null,
-
-    bag: null,
-
-    location: null,
-
-    bulk: null
-
-};
-
 Object.freeze(CONFIG);
