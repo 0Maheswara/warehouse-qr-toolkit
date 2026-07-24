@@ -83,7 +83,7 @@ const Router = {
         ======================================================
         */
 
-        const validPage = Object.values(CONFIG.PAGES).includes(page);
+        const validPage = Object.keys(CONFIG.PAGES).includes(page);
 
         if (!validPage) {
 
